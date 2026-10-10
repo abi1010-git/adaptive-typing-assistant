@@ -41,8 +41,9 @@ The average CER difference between fixed and adaptive debounce is modest. Adapti
 - TypeScript
 - Vite
 - Vitest
+- Streamlit (companion demo)
 
-The project runs in the browser with no backend, database, paid API, or external model.
+The React app and Streamlit companion run without a backend, database, paid API, or external model.
 
 ## Getting Started
 
@@ -59,6 +60,24 @@ npm run dev
 ```
 
 Open the local URL printed by Vite, usually `http://localhost:5173`. If that port is occupied, Vite selects another available port and prints it in the terminal.
+
+### Run the Streamlit demo on Windows
+
+Create an isolated Python environment and install the demo dependency:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+```
+
+Start the companion website:
+
+```powershell
+streamlit run streamlit_app.py
+```
+
+Open the local URL printed by Streamlit, usually `http://localhost:8501`.
 
 ## Testing
 
