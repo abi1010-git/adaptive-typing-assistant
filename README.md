@@ -1,4 +1,7 @@
-# Adaptive Typing Assistant
+# Adaptive Typing Assistant Rough Draft
+
+StreamLit Link: https://adaptive-typing-assistant-xc53bpgibax76njxkawvac.streamlit.app/
+Codex was used in parts of this project. 
 
 ## Project Overview
 
