@@ -1,7 +1,8 @@
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { ExperimentDashboard } from "./experiment/ExperimentDashboard";
 import type { BatchExperimentResult } from "./experiment/runner";
 import type { ExperimentWorkerResponse } from "./experiment/workerProtocol";
+import { getPhysicalKeyCommand } from "./liveTyping/physicalKeyboard";
 import { LiveTypingSession, type LiveKeyboardMode } from "./liveTyping/session";
 import { compareFilters, type FilterComparison } from "./simulation/evaluation";
 import { simulateInput, type SimulationResult } from "./simulation/simulator";
@@ -33,6 +34,14 @@ function App() {
     } else {
       setLiveState(liveSession.activate(key === "Space" ? " " : key, performance.now()));
     }
+  }
+
+  function handleLiveKeyDown(event: ReactKeyboardEvent<HTMLTextAreaElement>) {
+    const command = getPhysicalKeyCommand(event.key, event);
+    if (command === null) return;
+
+    event.preventDefault();
+    pressKey(command);
   }
 
   function changeKeyboardMode(mode: LiveKeyboardMode) {
@@ -159,10 +168,12 @@ function App() {
             className="typed-text"
             value={liveState.text}
             readOnly
+            tabIndex={0}
             aria-describedby="live-keyboard-note"
             placeholder="Activate an on-screen key to start typing…"
             rows={4}
             spellCheck={false}
+            onKeyDown={handleLiveKeyDown}
           />
           <div className="live-metrics" aria-live="polite" aria-atomic="true">
             <div className="live-metric"><strong>{liveState.totalActivations}</strong><span>Total activations</span></div>
@@ -209,7 +220,7 @@ function App() {
               </div>
             </div>
           </div>
-          <p className="keyboard-hint">Use Tab and Enter or Space to operate each key, or type in the text field.</p>
+          <p className="keyboard-hint">Focus the live text area to type letters, Space, or Backspace with your physical keyboard. It stays read-only; you can still select its text. Or use Tab, then Enter or Space, on an on-screen key.</p>
           <p id="live-keyboard-note" className="keyboard-hint">Backspace and Clear are not filtered or counted as key activations; each resets filter timing history. Mode changes reset counters and filter history but keep accepted text.</p>
           <button className="reset-session-button" type="button" onClick={resetLiveSession}>Reset Session</button>
         </section>

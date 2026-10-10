@@ -12,6 +12,8 @@ describe("live keyboard accessibility markup", () => {
     expect(markup).toContain('aria-label="Type space"');
     expect(markup).toContain('aria-label="Delete last character"');
     expect(markup).toContain('aria-describedby="live-keyboard-note"');
+    expect(markup).toContain('tabindex="0"');
     expect(markup).toContain('readOnly=""');
+    expect(markup).toContain("physical keyboard");
   });
 });
